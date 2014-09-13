@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>com.mysql.jdbc.Driver</param-value>
+    </context-param>
     <servlet>
         <servlet-name>HelloWorld</servlet-name>
         <servlet-class>HelloWorld</servlet-class>
@@ -32,6 +36,14 @@
         <servlet-name>EmpData</servlet-name>
         <servlet-class>EmpData</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>empconfig</servlet-name>
+        <servlet-class>empconfig</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Counter</servlet-name>
+        <servlet-class>Counter</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HelloWorld</servlet-name>
         <url-pattern>/HelloWorld</url-pattern>
@@ -63,6 +75,14 @@
     <servlet-mapping>
         <servlet-name>EmpData</servlet-name>
         <url-pattern>/EmpData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>empconfig</servlet-name>
+        <url-pattern>/empconfig</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Counter</servlet-name>
+        <url-pattern>/Counter</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,4 +1,3 @@
-import javax.servlet.GenericServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -15,13 +14,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class emp extends HttpServlet{
+public class empconfig extends HttpServlet{
     Connection con=null;
     Statement stmt=null;
     ResultSet rs=null;
     String n,p;
     String url="jdbc:mysql://localhost/lab",un="root",up="java";
-    public void init(ServletConfig sc) throws ServletException{
+    ServletContext ctx;
+    String d;
+    
+     public void init(ServletConfig sc) throws ServletException{
         super.init(sc);
         
         
@@ -54,7 +56,10 @@ public class emp extends HttpServlet{
     public void doGet(HttpServletRequest req,HttpServletResponse res)throws IOException{
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
-        
+        ctx=getServletContext();
+        d=(String)ctx.getInitParameter("driver");
+        //String d=sc.getInitParameter("driver");
+       
         out.println("<html><body><table border='1'>");
         out.println("<th> Name </th> <th> Passworld </th>");
         try{
@@ -70,20 +75,6 @@ public class emp extends HttpServlet{
         }catch(SQLException sqle){
             out.println(sqle.getMessage());
         }
-        ServletContext ctx;
-        int c;
-   
-        ctx=getServletContext();
-        String cnt=(String)ctx.getAttribute("Counter");
-        if(cnt!=null){
-            c=Integer.parseInt(cnt);
-        }else
-        {
-            c=0;
-        }
-        c=c+1;
-        out.print("visit="+c);
-        ctx.setAttribute("Counting",c+"");
             out.println("</table>");
             out.println("</html>");
     }

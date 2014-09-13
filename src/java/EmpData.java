@@ -1,4 +1,3 @@
-import javax.servlet.GenericServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -69,9 +68,7 @@ public class EmpData extends HttpServlet
         
             n=req.getParameter("textn");
             p=req.getParameter("textp");
-            sql="insert into employee values('"+n
-                    +"','"+
-                    p+"')";
+            sql="insert into employee values('"+n+"','"+p+"')";
         try
         {
             out.println("<html> <body> <h2> Welcome to JayVora Organizaion! </h2> ");
@@ -85,9 +82,7 @@ public class EmpData extends HttpServlet
             rs = stmt.executeQuery(sql);
             
             while(rs.next()) { 
-                out.println("<table border=2> <tr> <td> "
-                        + rs.getString(1)
-                        +" </td> </tr></table> ");
+                out.println("<table border=2> <tr> <td> "+ rs.getString(1)+" </td> </tr></table> ");
             }
             
             
