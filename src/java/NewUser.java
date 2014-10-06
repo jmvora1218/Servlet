@@ -1,19 +1,26 @@
-import java.io.*;
-import java.sql.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 
-public class Login extends HttpServlet
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+public class NewUser extends HttpServlet
 {
     ServletContext ctx;
-    String un,up,driver,url,name,pass;
+    String un,up,driver,url,name,pass,sql;
     Connection con=null;
     Statement stmt=null;
     ResultSet rs=null;
-    boolean flag1=false;
-    boolean flag2=false;
-
-
+    
     public void init(ServletConfig sc)throws ServletException
     {
         super.init(sc);
@@ -49,45 +56,41 @@ public class Login extends HttpServlet
                 name=req.getParameter("txtname");
                 pass=req.getParameter("txtpass");
                 
-                System.out.println(name+pass);
-                while(rs.next())
-                {
-                     String n=rs.getString("NAME");
-                     String p=rs.getString("PASSWORD");
-                     System.out.println(" "+n+p);
-                     if(name.equals(n))
-                     {
-                        flag1=true;
-                        if(pass.equals(p))
-                        {
-                            flag2=true;
-                        }
-                     }
-                 }
-                if(flag1&&flag2)
-                {
-                     String url="welcome?greet=welcome&name='"+name+"'&password='"+pass+"'";
-                    //   String url="welcome?greet=welcome&name=abc&password=pwd";
-                     res.sendRedirect(url);
-                }
-            }
-            catch(Exception e)
-            {
-                out.println(e.getMessage());
+                     String n=rs.getString("name");
+                     String p=rs.getString("pass");
+                     sql="insert into employee values('"+n+"','"+p+"')";
+            stmt.executeUpdate(sql);
+                    out.println("<h3> Username : "+ n +"is successfully registered! </h3>");
+                
+                
+            }catch(Exception e){
+                
             }
         }
     }
-      
-    public void doGet(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
+    
+    
+    
+    
+    
+    
+public void doGet(HttpServletRequest req,HttpServletResponse res) throws ServletException, IOException
     {
         res.setContentType("text/html");
         PrintWriter out=res.getWriter();
-        out.println("<html><body><form method='post' action='Login'>");
+        
+        
+        out.println("<html><body>");
+        out.println("<form name='submit' method='post' action='NewUser'>");
         out.println("Enter Name:<input type='text' name='txtname'></br>");
         out.println("Enter Password:<input type='password' name='txtpass'></br>");
         out.println("<input type='submit' name='btnsubmit' value='Submit'></br>");
-        out.println("<a href ='NewUser'>New User</a></br><a href ='ForgotPass'>Forgot Password</a>");
-        out.println("</form></body></html>");
-
+        out.println("</form></html></body>");
+        /*
+        String g=req.getParameter("greet");
+        String n=req.getParameter("name");
+        String p=req.getParameter("password");
+        out.println(g+"  "+n+""+p);*/
+        
     }
 }
